@@ -27,6 +27,7 @@ const pizzas = [
 
 var Comando;
 var GComando = [];
+var ButtonEnviar = '<div class="col-md-auto" style="text-align: center; margin-top: 10px;"> <button type="button" class="btn btn-success">Finalizar Pedido</button> </div>'
 
 //PEDIDO
 // COMANDO QUE VERIFICA O PREÇO DOS PEDIDOS
@@ -78,10 +79,33 @@ function formaPedido(id, campo) {
 
     if (Ativo === true) {
         if (lista === null) {
-            GComando.push([Comando]);
+            // inseirindo a lista de comandos
+            GComando.push(Comando);
+
+            // apagando e dps inserindo o botão de enviar
+            var buscar = ButtonEnviar;
+            var indice = GComando.indexOf(buscar);
+            while (indice >= 0) {
+                GComando.splice(indice, 1);
+                indice = GComando.indexOf(buscar);
+            }
+            GComando.push(ButtonEnviar);
         }
     } else {
-        // não tive tempo de fazer a rotina para quando o checkbox for falso.
+        var buscar = Comando;
+        var indice = GComando.indexOf(buscar);
+        while (indice >= 0) {
+            GComando.splice(indice, 1);
+            indice = GComando.indexOf(buscar);
+        }
+
+        if (GComando.length === 1) { // verificando se a lista esta com apensa 1 registro
+            var buscar2 = ButtonEnviar;
+            var indice2 = GComando.indexOf(buscar2);
+            if (indice2 === 0) { // se este registro for o index do buttun então devo apagar
+                GComando.splice(indice2, 1);
+            }
+        }
     }
 
     return window.document.getElementById('itemCarrinho-Pedido').innerHTML = GComando;
